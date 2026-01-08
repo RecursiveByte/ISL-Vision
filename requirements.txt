@@ -43,7 +43,7 @@ mediapipe==0.10.31
 ml_dtypes==0.5.4
 namex==0.1.0
 narwhals==2.15.0
-numpy==1.26.4
+numpy<2.0
 oauthlib==3.3.1
 opencv-python==4.12.0.88
 opt_einsum==3.4.0
