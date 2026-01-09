@@ -1,5 +1,5 @@
 // Configuration
-const API_URL = 'http://localhost:8000';
+const API_URL = 'https://ai-ml-bmmn.onrender.com';
 
 // DOM Elements
 const startBtn = document.getElementById('startBtn');
