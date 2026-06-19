@@ -1,5 +1,5 @@
 // API Configuration
-export const API_URL = "https://ai-ml-bmmn.onrender.com";
+export const API_URL = "http://127.0.0.1:8000";
 
 // Timing Configuration
 export const PREDICTION_INTERVAL = 1000; // predict every 1 sec
