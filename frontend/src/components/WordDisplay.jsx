@@ -1,9 +1,18 @@
-import React from 'react';
+import { FiType } from "react-icons/fi";
 
 const WordDisplay = ({ currentWord }) => {
   return (
-    <div className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-lg text-center text-4xl font-bold py-6 mb-4 shadow-lg min-h-[80px] flex items-center justify-center">
-      {currentWord || "[empty]"}
+    <div className="mb-5 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 p-6 text-white shadow-lg">
+      <div className="mb-2 flex items-center gap-2 text-indigo-100">
+        <FiType />
+        <span className="text-sm font-medium tracking-wide">
+          CURRENT WORD
+        </span>
+      </div>
+
+      <h2 className="min-h-[48px] break-all text-center text-4xl font-bold">
+        {currentWord || "—"}
+      </h2>
     </div>
   );
 };

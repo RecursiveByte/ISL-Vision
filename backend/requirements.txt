@@ -33,7 +33,7 @@ markdown-it-py==4.0.0
 MarkupSafe==3.0.3
 matplotlib==3.10.8
 mdurl==0.1.2
-mediapipe==0.10.14
+mediapipe==0.10.35
 ml_dtypes==0.5.4
 namex==0.1.0
 numpy==1.26.4
@@ -66,8 +66,6 @@ starlette==0.36.3
 tensorboard==2.19.0
 tensorboard-data-server==0.7.2
 tensorflow==2.19.0
-tensorflow-estimator==2.13.0
-tensorflow-io-gcs-filesystem==0.37.1
 termcolor==3.3.0
 threadpoolctl==3.6.0
 typing-inspection==0.4.2

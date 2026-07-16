@@ -15,7 +15,8 @@ export const useBackendConnection = (apiUrl) => {
         setBackendStatus("error");
         setStatusMessage("Backend not ready");
       }
-    } catch {
+    } catch (err){
+      console.error("Backend connection failed:", err);
       setBackendStatus("error");
       setStatusMessage("Cannot connect to backend");
     }

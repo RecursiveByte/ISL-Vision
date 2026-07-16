@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import VideoCanvas from "./components/VideoCanvas";
 import StatusPanel from "./components/StatusPanel";
 import WordDisplay from "./components/WordDisplay";
@@ -8,14 +8,13 @@ import ColorLegend from "./components/ColorLegend";
 import { useWebcam } from "./hooks/useWebcam";
 import { useWordBuilder } from "./hooks/useWordBuilder";
 import { useBackendConnection } from "./hooks/useBackendConnection";
-import { API_URL } from "./config/constants";
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 function App() {
-  // Backend connection state
   const { backendStatus, statusMessage, checkBackendConnection } =
     useBackendConnection(API_URL);
 
-  // Webcam and prediction state
   const {
     isWebcamActive,
     videoRef,
@@ -27,11 +26,9 @@ function App() {
     stopWebcam,
   } = useWebcam(API_URL, backendStatus);
 
-  // Word building state
   const { currentWord, countdown, clearWord, deleteLastLetter, addSpace } =
     useWordBuilder(isWebcamActive, currentLetter);
 
-  // Check backend on mount
   useEffect(() => {
     checkBackendConnection();
   }, []);

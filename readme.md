@@ -7,126 +7,84 @@ Real-time Indian Sign Language to text converter using computer vision and deep 
 ![TailwindCSS](https://img.shields.io/badge/Tailwind-3.4.17-38B2AC?logo=tailwind-css)
 
 ---
-## Demo
-**ISL-Vision** [Live demo](https://isl-vision.onrender.com)
 
+## Demo
+
+**ISL-Vision** – [Live Demo](https://isl-vision.onrender.com)
+
+---
 
 ## What It Does
 
-Captures hand gestures via webcam, detects 21 hand landmarks using MediaPipe, and predicts ISL letters using a trained DNN model. Auto-builds words from detected letters with manual editing controls.
+ISL-Vision is a real-time Indian Sign Language (ISL) recognition system that takes hand gestures as input and predicts the corresponding English alphabets using a Feed Forward Neural Network (FFNN) trained on MediaPipe hand landmark features for multi-class alphabet classification, achieving **99% accuracy**.
 
 ---
 
 ## Tech Stack
 
-**Frontend:**
-- React 19.2 + Vite 5.4
-- Tailwind CSS 3.4
+### Frontend
+
+- React 19 + Vite
+- Tailwind CSS
 - MediaPipe Hands (CDN)
 - Axios
 
-**Backend:**
-- Fast api
-- TensorFlow/Keras (DNN model)
-- OpenCV + MediaPipe
-- Pandas,NumPy,scikit-learn ...
+### Backend
 
-**Model:**
-- Trained in Google Colab using TensorFlow
-- Deep Neural Network architecture
-- Hand landmark feature extraction
+- FastAPI
+- TensorFlow / Keras
+- OpenCV
+- MediaPipe
+- NumPy
+- Pandas
+- Scikit-learn
+
+### Model
+
+- Trained in Google Colab
+- Feed Forward Neural Network (FFNN)
+- MediaPipe hand landmark feature extraction
 - StandardScaler normalization
 
 ---
 
-## Project Structure
-
-```
-AI_ML/
-├── backend/
-│   ├── app.py                          # FAST API server
-│   ├── main.py                         # Alternative entry
-│   ├── requirements.txt
-│   ├── runtime.txt
-│   ├── basic/
-│   │   ├── gesture.py                  # Gesture recognition logic
-│   │   └── sign.py                     # Sign language processing
-│   ├── models/
-│   │   ├── hand_landmark_dnn.keras     # Trained DNN model
-│   │   └── scaler.pkl                  # Feature scaler
-│   ├── static/
-│   │   ├── index.html                  # Demo page
-│   │   ├── script.js
-│   │   └── style.css
-│   └── utils/
-│       ├── config.py                   # Configuration
-│       ├── feature_extractor.py        # Extract hand features
-│       ├── hand_detector.py            # MediaPipe detector
-│       ├── model_manager.py            # Model loading
-│       ├── visualization.py            # Drawing utilities
-│       └── word_builder.py             # Word building logic
-│
-└── frontend/
-    ├── package.json
-    ├── vite.config.js
-    ├── tailwind.config.js
-    ├── postcss.config.js
-    ├── index.html
-    ├── public/
-    │   └── vite.svg
-    └── src/
-        ├── main.jsx                    # Entry point
-        ├── App.jsx                     # Main component
-        ├── index.css                   # Global styles
-        ├── components/
-        │   ├── VideoCanvas.jsx         # Webcam + canvas overlay
-        │   ├── StatusPanel.jsx         # Connection/prediction status
-        │   ├── WordDisplay.jsx         # Current word display
-        │   ├── WordControls.jsx        # Space/delete/clear buttons
-        │   ├── WebcamControls.jsx      # Start/stop webcam
-        │   ├── ColorLegend.jsx         # Landmark color guide
-        │   └── index.js                # Component exports
-        ├── hooks/
-        │   ├── useWebcam.js            # Webcam + API logic
-        │   ├── useMediaPipe.js         # Hand detection
-        │   ├── useWordBuilder.js       # Word building state
-        │   └── useBackendConnection.js # Health check
-        ├── utils/
-        │   └── handDrawing.js          # Canvas drawing (21 landmarks)
-        └── config/
-            └── constants.js            # API URL, intervals, MediaPipe config
-```
-
-
 ## How It Works
 
-1. **Webcam** → Captures video (1280x720)
-2. **MediaPipe** → Detects 21 hand landmarks per hand
-3. **Frontend** → Draws landmarks on canvas, sends frame to backend every 1s
-4. **Backend** → Extracts features, runs through DNN model
-5. **Prediction** → Returns ISL letter + confidence score
-6. **Word Building** → Auto-adds letter every 5s, manual controls available
+1. **Webcam** captures live video frames.
+2. **MediaPipe Hands** detects 21 hand landmarks for every detected hand.
+3. **Frontend** visualizes the landmarks and periodically sends captured frames to the backend.
+4. **Backend** extracts landmark-based features and preprocesses them using a StandardScaler.
+5. **Feed Forward Neural Network (FFNN)** predicts the corresponding English alphabet.
+6. **Word Builder** automatically constructs words from predictions while allowing manual editing through space, delete, and clear controls.
 
-**Configuration** (`constants.js`):
+### Configuration (`constants.js`)
+
 ```javascript
-PREDICTION_INTERVAL = 1000   // Backend call frequency (ms)
-LETTER_ADD_INTERVAL = 5000   // Auto-add frequency (ms)
+PREDICTION_INTERVAL = 1000;   // Backend request interval (ms)
+LETTER_ADD_INTERVAL = 5000;   // Auto-add interval (ms)
+
 MEDIAPIPE_CONFIG = {
   maxNumHands: 2,
   modelComplexity: 1,
   minDetectionConfidence: 0.3,
-  minTrackingConfidence: 0.3
-}
+  minTrackingConfidence: 0.3,
+};
 ```
 
 ---
 
 ## API Endpoints
 
-- `GET /health` - Backend health check
-- `POST /api/predict` - Send frame (base64 JPEG), get prediction
+### `GET /health`
 
-**Response:**
+Checks backend health.
+
+### `POST /api/predict`
+
+Accepts a Base64 encoded frame and returns the prediction.
+
+### Response
+
 ```json
 {
   "predicted_letter": "A",
@@ -139,24 +97,41 @@ MEDIAPIPE_CONFIG = {
 
 ## Model Details
 
-- **Architecture:** Deep Neural Network (DNN)
-- **Training:** Google Colab with TensorFlow/Keras
-- **Input:** 21 hand landmarks (x, y, z) × 2 hands = 126 features
-- **Output:** ISL letter classification
+- **Model:** Feed Forward Neural Network (FFNN)
+- **Framework:** TensorFlow / Keras
+- **Training Environment:** Google Colab
+- **Input Features:** 21 MediaPipe hand landmarks (x, y, z coordinates) from up to two hands
+- **Feature Size:** 126 features
+- **Task:** Multi-class English alphabet classification
 - **Preprocessing:** StandardScaler normalization
-- **Format:** Keras (.keras) + pickle (.pkl)
+- **Accuracy:** **99%**
+- **Saved Model Format:** `.keras`
+
+---
+
+## Dataset
+
+The model was trained using the **Indian Sign Language Hand Landmarks Dataset**, which contains MediaPipe hand landmark coordinates for English alphabet gestures.
+
+**Dataset:** https://www.kaggle.com/datasets/eraakash/indian-sign-language-hand-landmarks-dataset
+
+
+### Training Notebook
+
+The complete model training pipeline, including data preprocessing, feature engineering, model training, evaluation, and model export, is available in the Google Colab notebook below.
+
+**Google Colab:** https://colab.research.google.com/drive/1_xbdp57p-9eelgWQwOS5kMYQYJwwBHE7#scrollTo=axllfw22nkhG
 
 ---
 
 ## Key Features
 
-- Real-time hand tracking (30+ FPS)
-- Dual hand support
-- Color-coded landmark visualization
-- Auto word building with countdown
-- Manual editing (space, delete, clear)
-- Confidence scoring
-- Responsive UI
+- Real-time Indian Sign Language alphabet recognition
+- MediaPipe-based hand landmark detection
+- Feed Forward Neural Network (FFNN) inference
+- Dual-hand support
+- Confidence score for every prediction
+- Responsive modern UI
 
 ---
 
@@ -168,4 +143,4 @@ MIT License
 
 ## Author
 
-**RecursiveByte** - [GitHub](https://github.com/RecursiveByte)
+**RecursiveByte** – https://github.com/RecursiveByte

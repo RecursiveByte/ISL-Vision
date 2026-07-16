@@ -1,11 +1,46 @@
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
 # Python
-venv/
 __pycache__/
-*.pyc
-
-# ML / heavy stuff
-*.dll
+*.py[cod]
+*.pyo
 *.pyd
+*.so
+.python-version
 
-# OS
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Build outputs
+dist/
+build/
+
+# Coverage
+coverage/
+.coverage
+htmlcov/
+.pytest_cache/
+
+# IDEs
+.vscode/
+.idea/
+
+# OS files
 .DS_Store
+Thumbs.db
+
+# Logs
+*.log
